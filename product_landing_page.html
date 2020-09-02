@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Flying Drone</title>
+	<link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+    <style>
+    	html, body
+    	{
+    		margin:0;
+    		padding:0;
+    		width:100%;
+    		height:100vh;
+    		font-family: "Playfair Display" !important;
+    		user-select: none;
+    	}
+
+    	.container
+    	{
+    		width:100%;
+    		height:100vh;
+    		margin:0;
+    		padding:0;
+    	}
+
+    	.left, .right
+    	{
+    		position:absolute;
+    		height:100%;
+    		width:50%;
+    	}
+
+    	.left
+    	{
+    		background:#fff;
+    	}
+
+    	.right
+    	{
+    		background:#e0e0e0;
+    		left:50%;
+    	}
+
+    	.nav
+    	{
+    		position:fixed;
+    		width:100%;
+    		height:100px;
+    	}
+
+    	.logo, .next
+    	{
+    		position:absolute;
+    		line-height:80px;
+    		padding:10px;
+    	}
+
+    	.watch, .cart
+    	{
+    		position:absolute;
+    		line-height:80px;
+    		padding:10px;
+    		right:0;
+    	}
+
+    	.logo
+    	{
+    		padding:10px 80px 10px 60px;
+    		background:#e0e0e0;
+    		letter-spacing:3px;
+    	}
+
+    	.next
+    	{
+    		left:280px;
+    	}
+		
+		.watch
+		{
+			right:220px;
+			font-family:'helvetica';
+			color:grey;
+			font-weight:lighter;
+			text-transform:uppercase;
+		}
+
+		.cart
+		{
+			right:70px;
+		}
+
+		.right-sidebar
+		{
+			right:80px;
+			position:absolute;
+			top:45%;
+			transform:translateY(-50%);
+			text-align:right;
+		}
+
+		.right-sidebar ul
+		{
+			list-style:none;
+		}
+
+		.title
+		{
+			font-size:36px;
+			font-family:'Playfair Display';
+			padding-bottom:40px;
+		}
+
+		.right-sidebar li:not(:first-child)
+		{
+			padding:6px 0;
+		}
+		
+		.product
+		{
+			position:absolute;
+			top:50%;
+			left:50%;
+			transform:translate(-50%,-50%);
+			animation:fly 3s ease infinite;
+		}
+
+		@keyframes fly
+		{
+			0%
+			{
+				transform:translate(-50%, -46%)
+			}
+
+			50%
+			{
+				transform:translate(-50%, -50%);
+			}
+
+			100%
+			{
+				transform:translate(-50%, -46%);
+			}
+		}
+
+		.left-bottom
+		{
+			position:absolute;
+			left:60px;
+			bottom:40px;
+			text-transform:uppercase;
+			color:grey;
+			font-size:12px;
+			letter-spacing:3px;
+			font-family:'helvetica';
+			font-weight:600;
+		}
+
+		.left-sidebar
+		{
+			position:absolute;
+			left:60px;
+			top:45%;
+			padding:10px;
+			transform:translateY(-50%);
+			text-align:left;
+			width:24%;
+		}
+
+		.left-sidebar button
+		{
+			margin:1em 0;
+			padding:24px 48px;
+			background:#000;
+			color:#fff;
+			font-weight:500;
+			border:0;
+			outline:none;
+			letter-spacing:4px;
+			text-transform:uppercase;
+		}
+
+		.left-sidebar p
+		{
+			color:grey;
+		}
+
+		#price
+		{
+			color:#000;
+			font-family:'helvetica';
+		}
+
+		.media
+		{
+			position:absolute;
+			right:60px;
+			bottom:40px;
+		}
+
+		.media ul
+		{
+			list-style:none;
+		}
+
+		.media ul li
+		{
+			display:inline-block;
+		}
+
+		.media ul li:not(:last-child)
+		{
+			padding-right:30px;
+		}
+		
+		#overlay
+		{
+			position:absolute;
+			width:100%;
+			height:100vh;
+			background:#fff;
+			z-index:1;
+			top:0%;
+		}
+
+		#overlay h3
+		{
+			position:absolute;
+			top:50%;
+			left:50%;
+			transform:translate(-50%,-50%);
+			color:grey;
+			font-weight:bold;
+			font-size:24px;
+			text-transform:uppercase;
+			letter-spacing:4px;
+			opacity:1;
+		}
+
+
+    </style>
+</head>
+<body>
+
+	<div id="overlay">
+		<h3>Loading</h3>
+	</div>
+	<div class="container">
+		<div class="left"></div>
+		<div class="right"></div>
+
+		<nav class="nav">
+			<div class="logo">DJI MAVIC</div>
+			<div class="next"><i class="fa fa-angle-right"></i></div>
+			<div class="watch"><i class="fa fa-caret-right"></i>&nbsp;&nbsp;Watch Tutorial</div>
+			<div class="cart"><i class="fa fa-shopping-cart"></i></div>
+		</nav>
+
+		<div class="left-sidebar">
+			<h1 class="product-title">Flying Drone</h1>
+			<p class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati culpa veniam enim quam, sunt officiis, maiores quod esse molestias a!</p>
+			<p id="price">Price: USD $999.99</p>
+			<button class="btn">buy now</button>
+		</div>
+
+		<div class="left-bottom">
+			<p>Flying Drone</p>
+		</div>
+
+		<div class="product" id="product">
+			<img src="assets/drone.png" alt="flying drone">
+		</div>
+
+		<div class="right-sidebar">
+			<ul>
+				<li class="title">Shop</li>
+				<li>Drones</li>
+				<li>Cameras</li>
+				<li>Lens</li>
+				<li>Accessories</li>
+				<li>View All</li>
+			</ul>
+		</div>
+
+		<div class="media">
+			 <ul>
+                <li><i class="fa fa-facebook"></i></li>
+                <li><i class="fa fa-instagram"></i></li>
+                <li><i class="fa fa-twitter"></i></li>
+             </ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		TweenMax.to("#overlay h3", 1 , {
+			opacity:0,
+			y: -80,
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.to("#overlay", 2 , {
+			delay:1,
+			top: "-100%",
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.from(".right", 1.6, {
+			delay:0.6,
+			width:0,
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.from(".logo", 1, {
+			delay:1,
+			opacity:0,
+			x: -20,
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.from(".next", 1, {
+			delay:1.2,
+			opacity:0,
+			x: -20,
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.from(".watch", 1, {
+			delay:1.4,
+			opacity:0,
+			x: -20,
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.from(".cart", 1, {
+			delay:1.6,
+			opacity:0,
+			x: -20,
+			ease: Expo.easeInOut
+		});
+
+		TweenMax.from(".product-title", 2, {
+			delay:1.6,
+			opacity:0,
+			y: 20,
+			ease: Expo.easeInOut
+		})
+
+		TweenMax.from(".desc", 2 , {
+			delay:1.8,
+			opacity:0,
+			y:20,
+			ease: Expo.easeInOut
+		})
+
+		TweenMax.from("#price", 2 , {
+			delay:2,
+			opacity:0,
+			y:20,
+			ease: Expo.easeInOut
+		})
+
+		TweenMax.from(".btn", 2, {
+            delay: 2.2,
+            opacity: 0,
+            y: 20,
+            ease: Expo.easeInOut
+      });
+
+      TweenMax.staggerFrom(".right-sidebar ul li", 1, {
+            delay: 2.6,
+            opacity: 0,
+            y: 20,
+            ease: Power3.easeInOut
+      }, 0.08);
+
+      TweenMax.from(".left-bottom", 2, {
+            delay: 2.8,
+            opacity: 0,
+            y: 20,
+            ease: Expo.easeInOut
+      });
+
+      TweenMax.staggerFrom(".media ul li", 1, {
+            delay: 3.6,
+            opacity: 0,
+            y: 20,
+            ease: Power3.easeInOut
+      }, 0.08);
+
+      TweenMax.from(".product img", 3, {
+            delay: 2,
+            // opacity: 0,
+            // y: 20,
+            scale: 0,
+            ease: Expo.easeInOut
+      });
+
+      TweenMax.to(".product img", 3, {
+            delay: 2,
+            // opacity: 0,
+            // y: 20,
+            scale: 1,
+            ease: Expo.easeInOut
+      });
+
+	</script>
+</body>
+</html>
